@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, MapPin, Filter, Briefcase, Clock, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -6,16 +6,25 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Link } from 'react-router-dom';
-import { mockJobs, jobCategories, experienceLevels, jobTypes, type Job } from '@/data/mockJobs';
+import { Link, useLocation } from 'react-router-dom';
+import { mockJobs, jobCategories, experienceLevels, jobTypes, popularLocations, type Job } from '@/data/mockJobs';
 
 const JobListings = () => {
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
   const [locationFilter, setLocationFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [experienceFilter, setExperienceFilter] = useState('');
   const [showFilters, setShowFilters] = useState(false);
+
+  // Handle category filter from navigation
+  useEffect(() => {
+    if (location.state?.categoryFilter) {
+      setCategoryFilter(location.state.categoryFilter);
+      setShowFilters(true);
+    }
+  }, [location.state]);
 
   const filteredJobs = useMemo(() => {
     return mockJobs.filter((job: Job) => {
@@ -75,13 +84,19 @@ const JobListings = () => {
               />
             </div>
             <div className="flex-1 relative">
-              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
-              <Input
-                placeholder="Location"
-                value={locationFilter}
-                onChange={(e) => setLocationFilter(e.target.value)}
-                className="pl-10 h-12 neuro-button"
-              />
+              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 z-10" />
+              <Select value={locationFilter} onValueChange={setLocationFilter}>
+                <SelectTrigger className="pl-10 h-12 neuro-button">
+                  <SelectValue placeholder="Location" />
+                </SelectTrigger>
+                <SelectContent>
+                  {popularLocations.map((location) => (
+                    <SelectItem key={location} value={location}>
+                      {location}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <Button
               onClick={() => setShowFilters(!showFilters)}

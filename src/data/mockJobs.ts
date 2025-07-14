@@ -243,5 +243,18 @@ export const jobCategories = [
   'Operations'
 ];
 
+export const popularLocations = [
+  'San Francisco, CA',
+  'New York, NY',
+  'Los Angeles, CA',
+  'Seattle, WA',
+  'Austin, TX',
+  'Chicago, IL',
+  'Boston, MA',
+  'Denver, CO',
+  'Remote',
+  'Hybrid'
+];
+
 export const experienceLevels = ['Entry', 'Mid', 'Senior', 'Executive'];
 export const jobTypes = ['Full-time', 'Part-time', 'Contract', 'Remote', 'Hybrid'];

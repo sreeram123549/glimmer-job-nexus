@@ -1,22 +1,32 @@
 import { motion } from 'framer-motion';
-import { Search, MapPin, Briefcase, Users, TrendingUp, Star } from 'lucide-react';
+import { Search, MapPin, Briefcase, Users, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import heroImage from '@/assets/hero-image.jpg';
-import { jobCategories, mockJobs } from '@/data/mockJobs';
+import { jobCategories, mockJobs, popularLocations } from '@/data/mockJobs';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  
   const stats = [
     { icon: Briefcase, label: 'Active Jobs', value: '12,000+' },
-    { icon: Users, label: 'Companies', value: '2,500+' },
-    { icon: TrendingUp, label: 'Success Rate', value: '94%' },
-    { icon: Star, label: 'User Rating', value: '4.9/5' }
+    { icon: Users, label: 'Companies', value: '2,500+' }
   ];
 
   const featuredJobs = mockJobs.slice(0, 3);
+
+  const handleCategoryClick = (category: string) => {
+    navigate('/jobs', { state: { categoryFilter: category } });
+  };
+
+  const handleRefreshJobs = () => {
+    // Simulate refresh animation and show fresh jobs
+    window.location.reload();
+  };
 
   return (
     <div className="min-h-screen">
@@ -69,17 +79,35 @@ const HomePage = () => {
                     />
                   </div>
                   <div className="flex-1 relative">
-                    <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
-                    <Input
-                      placeholder="Location"
-                      className="pl-10 h-12 neuro-button"
-                    />
+                    <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 z-10" />
+                    <Select>
+                      <SelectTrigger className="pl-10 h-12 neuro-button">
+                        <SelectValue placeholder="Location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {popularLocations.map((location) => (
+                          <SelectItem key={location} value={location}>
+                            {location}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <Link to="/jobs">
-                    <Button className="h-12 px-8 neuro-button bg-gradient-primary text-primary-foreground glow-effect">
-                      Search Jobs
+                  <div className="flex gap-3">
+                    <Link to="/jobs">
+                      <Button className="h-12 px-8 neuro-button bg-gradient-primary text-primary-foreground glow-effect">
+                        Search Jobs
+                      </Button>
+                    </Link>
+                    <Button 
+                      onClick={handleRefreshJobs}
+                      variant="outline" 
+                      className="h-12 px-6 glass-button"
+                    >
+                      <RefreshCw className="h-5 w-5 mr-2" />
+                      Fresh Jobs
                     </Button>
-                  </Link>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -95,7 +123,8 @@ const HomePage = () => {
                 <Badge
                   key={category}
                   variant="secondary"
-                  className="glass-button px-4 py-2 text-sm cursor-pointer hover:glow-effect"
+                  className="glass-button px-4 py-2 text-sm cursor-pointer hover:glow-effect smooth-transition"
+                  onClick={() => handleCategoryClick(category)}
                 >
                   {category}
                 </Badge>
@@ -108,7 +137,7 @@ const HomePage = () => {
       {/* Stats Section */}
       <section className="py-20 bg-gradient-to-br from-background to-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
