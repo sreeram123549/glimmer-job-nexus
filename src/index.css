@@ -21,17 +21,17 @@
     --neuro-shadow-light: 0 0% 100%;
     --neuro-shadow-dark: 240 20% 75%;
 
-    /* Brand Colors */
-    --primary: 262 83% 58%;
+    /* Aspire Brand Colors */
+    --primary: 231 48% 48%;              /* Indigo #4F46E5 */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 262 83% 70%;
+    --primary-glow: 231 48% 65%;
 
-    --secondary: 210 40% 98%;
+    --secondary: 197 100% 63%;           /* Cyan #22D3EE */
     --secondary-foreground: 240 10% 15%;
 
-    --accent: 142 76% 36%;
+    --accent: 262 83% 58%;               /* Purple #7C3AED */
     --accent-foreground: 0 0% 100%;
-    --accent-glow: 142 76% 50%;
+    --accent-glow: 262 83% 75%;
 
     /* UI Elements */
     --card: 240 30% 99%;
@@ -51,9 +51,10 @@
     --popover-foreground: 240 10% 15%;
 
     /* Design System Effects */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.1));
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--accent)) 100%);
     --gradient-glass: linear-gradient(145deg, hsl(var(--glass-bg) / 0.8), hsl(var(--glass-bg) / 0.4));
+    --gradient-aspire: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--primary)), hsl(var(--accent)));
     
     --shadow-glass: 0 8px 32px hsl(var(--glass-shadow) / 0.1);
     --shadow-neuro-inset: inset 8px 8px 16px hsl(var(--neuro-shadow-dark) / 0.2), inset -8px -8px 16px hsl(var(--neuro-shadow-light) / 0.8);
@@ -197,5 +198,45 @@
 
   .bounce-transition {
     transition: var(--transition-bounce);
+  }
+
+  /* Floating Shapes Animation */
+  .floating-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .floating-shape:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, hsl(var(--primary)), hsl(var(--secondary)));
+    animation-delay: 0s;
+  }
+
+  .floating-shape:nth-child(2) {
+    top: 60%;
+    right: 15%;
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(45deg, hsl(var(--accent)), hsl(var(--primary)));
+    animation-delay: -2s;
+  }
+
+  .floating-shape:nth-child(3) {
+    bottom: 20%;
+    left: 20%;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, hsl(var(--secondary)), hsl(var(--accent)));
+    animation-delay: -4s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
   }
 }

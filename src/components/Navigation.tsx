@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Briefcase, User, Sun, Moon } from 'lucide-react';
+import { Menu, X, User, Sun, Moon, TrendingUp, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
 
@@ -24,16 +24,21 @@ const Navigation = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          {/* Aspire Logo */}
+          <Link to="/" className="flex items-center space-x-3">
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="neuro-button p-2"
+              className="relative"
             >
-              <Briefcase className="h-8 w-8 text-primary" />
+              <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center glow-effect">
+                <TrendingUp className="w-6 h-6 text-white" />
+              </div>
+              <Sparkles className="w-3 h-3 text-accent absolute -top-1 -right-1 animate-pulse" />
             </motion.div>
-            <span className="text-xl font-bold text-foreground">JobPortal</span>
+            <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              Aspire
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
